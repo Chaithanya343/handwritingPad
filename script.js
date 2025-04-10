@@ -2,8 +2,8 @@ const canvas = document.getElementById("drawingCanvas");
 const ctx = canvas.getContext("2d");
 
 // Set canvas dimensions based on screen size
-canvas.width = window.innerWidth > 800 ? 800 : window.innerWidth - 20;
-canvas.height = window.innerHeight * 0.6;
+canvas.width =764;
+canvas.height =1123;
 
 // Fill white initially
 ctx.fillStyle = "white";
