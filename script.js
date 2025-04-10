@@ -1,15 +1,18 @@
 const canvas = document.getElementById("drawingCanvas");
 const ctx = canvas.getContext("2d");
 
-// Set canvas dimensions based on screen size
-canvas.width =764;
-canvas.height =1123;
+// A4 resolution in px at 96 DPI
+canvas.width = 794;
+canvas.height = 1123;
 
-// Fill white initially
+// Fill canvas with white initially
 ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 let drawing = false;
+
+const penColorInput = document.getElementById("penColor");
+const penSizeInput = document.getElementById("penSize");
 
 // Mouse events
 canvas.addEventListener("mousedown", () => (drawing = true));
@@ -23,12 +26,10 @@ canvas.addEventListener("touchstart", (e) => {
   drawing = true;
   drawTouch(e);
 });
-
 canvas.addEventListener("touchmove", (e) => {
   e.preventDefault();
   drawTouch(e);
 });
-
 canvas.addEventListener("touchend", () => {
   drawing = false;
 });
@@ -36,9 +37,12 @@ canvas.addEventListener("touchend", () => {
 function draw(e) {
   if (!drawing) return;
   const rect = canvas.getBoundingClientRect();
-  ctx.fillStyle = "black";
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  ctx.fillStyle = penColorInput.value;
   ctx.beginPath();
-  ctx.arc(e.clientX - rect.left, e.clientY - rect.top, 4, 0, 2 * Math.PI);
+  ctx.arc(x, y, parseInt(penSizeInput.value), 0, 2 * Math.PI);
   ctx.fill();
 }
 
@@ -48,9 +52,10 @@ function drawTouch(e) {
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
   const y = touch.clientY - rect.top;
-  ctx.fillStyle = "black";
+
+  ctx.fillStyle = penColorInput.value;
   ctx.beginPath();
-  ctx.arc(x, y, 4, 0, 2 * Math.PI);
+  ctx.arc(x, y, parseInt(penSizeInput.value), 0, 2 * Math.PI);
   ctx.fill();
 }
 
@@ -68,11 +73,14 @@ function saveData() {
   }
 
   const imageName = `sentence_${Date.now()}.png`;
+
+  // Save image
   const link = document.createElement("a");
   link.download = imageName;
   link.href = canvas.toDataURL();
   link.click();
 
+  // Save label
   const label = `${imageName},${text}\n`;
   const blob = new Blob([label], { type: "text/csv" });
   const labelLink = document.createElement("a");

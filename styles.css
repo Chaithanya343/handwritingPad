@@ -3,7 +3,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #e0e0e0; /* Table-like background */
+    background-color: #dcdcdc; /* Desk/table background */
   }
   
   h1 {
@@ -17,19 +17,21 @@ body {
   }
   
   canvas {
-    border: 1px solid #bbb;
+    width: 100%;
+    max-width: 794px; /* Scaled A4 width */
+    height: auto;
+    aspect-ratio: 794 / 1123;
+    border: 2px solid #888;
     background-color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     touch-action: none;
-    width: 794px;
-    height: 1123px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
   
   .controls {
     margin-top: 20px;
   }
   
-  input, button {
+  input[type="text"], input[type="color"], input[type="range"], button {
     padding: 10px;
     font-size: 16px;
     margin: 5px;
