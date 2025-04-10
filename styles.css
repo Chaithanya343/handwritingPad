@@ -25,7 +25,7 @@
     width: 100%;
     max-width: 794px; /* A4 width */
     height: auto;
-    aspect-ratio: 794 / 1123;
+    aspect-ratio: 794 / 123;
     border: 2px solid #888;
     background-color: white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
