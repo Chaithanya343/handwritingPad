@@ -7,12 +7,42 @@ canvas.addEventListener("mouseup", () => (drawing = false));
 canvas.addEventListener("mouseout", () => (drawing = false));
 canvas.addEventListener("mousemove", draw);
 
+// ✅ Touch support
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  drawing = true;
+  drawTouch(e);
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  drawTouch(e);
+});
+
+canvas.addEventListener("touchend", () => {
+  drawing = false;
+});
+
 function draw(e) {
   if (!drawing) return;
   const rect = canvas.getBoundingClientRect();
   ctx.fillStyle = "black";
   ctx.beginPath();
   ctx.arc(e.clientX - rect.left, e.clientY - rect.top, 4, 0, 2 * Math.PI);
+  ctx.fill();
+}
+
+// ✅ Touch drawing handler
+function drawTouch(e) {
+  if (!drawing) return;
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  ctx.fillStyle = "black";
+  ctx.beginPath();
+  ctx.arc(x, y, 4, 0, 2 * Math.PI);
   ctx.fill();
 }
 
