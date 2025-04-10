@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Handwriting Collector</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <h1>Write Your Text</h1>
@@ -15,19 +15,20 @@
 
   <div class="controls">
     <input type="text" id="textInput" placeholder="What did you write?" />
-    
-    <!-- Pen color and size tools -->
+
     <label for="penColor">Pen Color:</label>
     <input type="color" id="penColor" value="#000000" />
 
     <label for="penSize">Pen Size:</label>
-    <input type="range" id="penSize" min="1" max="10" value="4" />
-    
+    <input type="range" id="penSize" min="1" max="10" value="2" />
+
     <br />
     <button onclick="saveData()">Save</button>
     <button onclick="clearCanvas()">Clear</button>
   </div>
 
+  <!-- Signature Pad Library -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

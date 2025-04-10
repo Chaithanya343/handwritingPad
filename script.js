@@ -1,68 +1,32 @@
 const canvas = document.getElementById("drawingCanvas");
-const ctx = canvas.getContext("2d");
-
-// A4 resolution in px at 96 DPI
-canvas.width = 500;
-canvas.height = 500;
-
-// Fill canvas with white initially
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-let drawing = false;
-
 const penColorInput = document.getElementById("penColor");
 const penSizeInput = document.getElementById("penSize");
 
-// Mouse events
-canvas.addEventListener("mousedown", () => (drawing = true));
-canvas.addEventListener("mouseup", () => (drawing = false));
-canvas.addEventListener("mouseout", () => (drawing = false));
-canvas.addEventListener("mousemove", draw);
+// Setup canvas size
+canvas.width = 500;
+canvas.height = 500;
 
-// Touch events
-canvas.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  drawing = true;
-  drawTouch(e);
-});
-canvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  drawTouch(e);
-});
-canvas.addEventListener("touchend", () => {
-  drawing = false;
+// Create Signature Pad
+const signaturePad = new SignaturePad(canvas, {
+  backgroundColor: "white",
+  penColor: penColorInput.value,
+  minWidth: parseFloat(penSizeInput.value),
+  maxWidth: parseFloat(penSizeInput.value),
 });
 
-function draw(e) {
-  if (!drawing) return;
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+// Dynamic pen color and size updates
+penColorInput.addEventListener("input", () => {
+  signaturePad.penColor = penColorInput.value;
+});
 
-  ctx.fillStyle = penColorInput.value;
-  ctx.beginPath();
-  ctx.arc(x, y, parseInt(penSizeInput.value), 0, 2 * Math.PI);
-  ctx.fill();
-}
-
-function drawTouch(e) {
-  if (!drawing) return;
-  const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
-  const x = touch.clientX - rect.left;
-  const y = touch.clientY - rect.top;
-
-  ctx.fillStyle = penColorInput.value;
-  ctx.beginPath();
-  ctx.arc(x, y, parseInt(penSizeInput.value), 0, 2 * Math.PI);
-  ctx.fill();
-}
+penSizeInput.addEventListener("input", () => {
+  const size = parseFloat(penSizeInput.value);
+  signaturePad.minWidth = size;
+  signaturePad.maxWidth = size;
+});
 
 function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  signaturePad.clear();
 }
 
 function saveData() {
@@ -77,7 +41,7 @@ function saveData() {
   // Save image
   const link = document.createElement("a");
   link.download = imageName;
-  link.href = canvas.toDataURL();
+  link.href = signaturePad.toDataURL("image/png");
   link.click();
 
   // Save label
