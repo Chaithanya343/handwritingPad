@@ -1,13 +1,23 @@
 const canvas = document.getElementById("drawingCanvas");
 const ctx = canvas.getContext("2d");
+
+// Set canvas dimensions based on screen size
+canvas.width = window.innerWidth > 800 ? 800 : window.innerWidth - 20;
+canvas.height = window.innerHeight * 0.6;
+
+// Fill white initially
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 let drawing = false;
 
+// Mouse events
 canvas.addEventListener("mousedown", () => (drawing = true));
 canvas.addEventListener("mouseup", () => (drawing = false));
 canvas.addEventListener("mouseout", () => (drawing = false));
 canvas.addEventListener("mousemove", draw);
 
-// ✅ Touch support
+// Touch events
 canvas.addEventListener("touchstart", (e) => {
   e.preventDefault();
   drawing = true;
@@ -32,14 +42,12 @@ function draw(e) {
   ctx.fill();
 }
 
-// ✅ Touch drawing handler
 function drawTouch(e) {
   if (!drawing) return;
   const rect = canvas.getBoundingClientRect();
   const touch = e.touches[0];
   const x = touch.clientX - rect.left;
   const y = touch.clientY - rect.top;
-
   ctx.fillStyle = "black";
   ctx.beginPath();
   ctx.arc(x, y, 4, 0, 2 * Math.PI);
@@ -60,14 +68,11 @@ function saveData() {
   }
 
   const imageName = `sentence_${Date.now()}.png`;
-
-  // Save image
   const link = document.createElement("a");
   link.download = imageName;
   link.href = canvas.toDataURL();
   link.click();
 
-  // Save text label
   const label = `${imageName},${text}\n`;
   const blob = new Blob([label], { type: "text/csv" });
   const labelLink = document.createElement("a");
