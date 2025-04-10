@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 
 // A4 resolution in px at 96 DPI
 canvas.width = 794;
-canvas.height = 1123;
+canvas.height = 1000;
 
 // Fill canvas with white initially
 ctx.fillStyle = "white";
