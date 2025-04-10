@@ -3,8 +3,8 @@ const penColorInput = document.getElementById("penColor");
 const penSizeInput = document.getElementById("penSize");
 
 // Setup canvas size
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 700;
+canvas.height = 700;
 
 // Create Signature Pad
 const signaturePad = new SignaturePad(canvas, {

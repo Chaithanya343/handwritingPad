@@ -17,21 +17,6 @@ h1 {
   color: rgb(167, 19, 19);
 }
 
-.canvas-container {
-  display: block;
-  margin: 0 auto;
-  max-width: 794px;
-}
-
-canvas {
-  width: 100%;
-  max-width: 794px;
-  aspect-ratio: 700 / 500;
-  border: 2px solid #888;
-  background-color: white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  touch-action: none;
-}
 
 .controls {
   margin-top: 20px;
